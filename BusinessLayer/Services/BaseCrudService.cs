@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLayer.Services.Email;
+
 
 namespace MVC_Example.BusinessLayer.Services
 {
