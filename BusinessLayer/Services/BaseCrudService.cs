@@ -14,22 +14,38 @@ namespace MVC_Example.BusinessLayer.Services
 {
     public abstract class BaseCrudService<TDto, TModel> : ICrudService<TDto> where TModel : BaseEntity where TDto : BaseDto
     {
+    private readonly IEmailService _emailService;
         private IRepository<TModel> repo;
 
-        public BaseCrudService(IRepository<TModel> repo)
-        {
-            this.repo = repo;
-        }
-        public virtual async Task CreateAsync(TDto userDto)
-        {
-            TModel user = MapToModel(userDto);
+        public BaseCrudService(IRepository<TModel> repo, IEmailService emailService)
+{
+    this.repo = repo;
+    _emailService = emailService;
+}
+
+     //   public virtual async Task CreateAsync(TDto userDto)
+     //   {
+      //      TModel user = MapToModel(userDto);
 
             //do logic here
 
-            await repo.CreateAsync(user);
+        //    await repo.CreateAsync(user);
 
             //do logic here
-        }
+       // }
+       public override async Task CreateAsync(TDto userDto)
+{
+    TModel user = MapToModel(userDto);
+
+    // Logic before creating the user
+
+    await repo.CreateAsync(user);
+
+    // Logic after creating the user
+
+    await _emailService.SendEmail(userDto.Email, "User Created", "The user has been successfully created.");
+}
+
 
         protected abstract TModel MapToModel(TDto dto);
 
