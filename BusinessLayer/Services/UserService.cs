@@ -52,4 +52,8 @@ namespace BusinessLayer.Services
             }).ToList();
         }
     }
+    Public SendWelcomeEmail(UserDto userDto);
+    {
+        
+    }
 }
